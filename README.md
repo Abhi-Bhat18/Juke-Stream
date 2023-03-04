@@ -4,13 +4,12 @@ Music sharing and Streaming web application
 This is a full-stack web application built with the MERN (MongoDB, Express, React, Node.js) stack that allows users to share and stream their favorite audio files. Users can create playlists, upload audio files, and explore other users' collections.
 
 ## Features
-User authentication and authorization using JWT tokens.
-User profile page to manage uploaded audio files and playlists.
-Audio file upload with support for multiple file formats.
-Playlist creation and management.
-Audio streaming with player controls (play, pause, skip, etc.).
-Search functionality to find audio files and playlists.
-Responsive design for optimal viewing on any device.
+* User authentication and authorization using JWT tokens.
+* User profile page to manage uploaded audio files and playlists.
+* Audio file upload with support for multiple file formats.
+* Playlist creation and management.
+* Audio streaming with player controls (play, pause, skip, etc.).
+* Responsive design for optimal viewing on any device.
 
 ## Installation
 
