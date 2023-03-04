@@ -17,12 +17,11 @@ To run the application locally, you'll need to have Node.js and MongoDB installe
 
 For frontend 
 ```
-cd streaming-frontend
 npm install 
 ```
 For backend
 ```
-cd backend
+cd API
 npm install
 ```
 This will install the required dependencies for both the client and server applications.
@@ -36,9 +35,11 @@ Replace <your-mongodb-uri> with the connection string for your MongoDB instance,
 
 Finally, start the client and server applications with the following commands:
 ```
-cd streaming-frontend
 npm run dev
-cd backend
+```
+API
+```
+cd API
 node server.js
 ```
 The client application will be available at http://localhost:5173, and the server will be running on http://localhost:1337.
