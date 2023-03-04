@@ -26,7 +26,7 @@ npm install
 ```
 This will install the required dependencies for both the client and server applications.
 
-Next, create a .env file in the backend directory with the following environment variables:
+Next, create a .env file in the API directory with the following environment variables:
 ```
 MONGODB_URI=<your-mongodb-uri>
 JWT_SECRET=<your-jwt-secret>
