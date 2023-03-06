@@ -1,5 +1,5 @@
 import mongodb from "mongodb";
-import client from "../config/db.js";
+import conn from "../config/db.js";
 
 // @desc   add new playlist
 // @route  POST /api/v1/playlist/create
@@ -7,7 +7,7 @@ import client from "../config/db.js";
 export const addPlaylist = async (req, res) => {
   try {
     // Establishing connection to the database
-    const conn = await client.connect();
+  
     const db = conn.db("music_streaming");
     const collection = db.collection("playlists");
 
@@ -35,7 +35,7 @@ export const addPlaylist = async (req, res) => {
 // @access Private
 export const deletePlaylist = async (req, res) => {
   try {
-    const conn = await client.connect();
+
     const db = conn.db("music_streaming");
     const collection = db.collection("playlists");
 
@@ -58,7 +58,7 @@ export const deletePlaylist = async (req, res) => {
 // @access Private
 export const addSongToPlaylist = async (req, res) => {
   try {
-    const conn = await client.connect();
+    
     const db = conn.db("music_streaming");
     const collection = db.collection("playlists");
 
@@ -83,9 +83,7 @@ export const addSongToPlaylist = async (req, res) => {
 // @access Private
 export const removeSongFromPlaylist = async (req, res) => {
   try {
-    console.log(req.params.id);
-    console.log(req.query.song);
-    const conn = await client.connect();
+   
     const db = conn.db("music_streaming");
     const collection = db.collection("playlists");
 
@@ -105,7 +103,7 @@ export const removeSongFromPlaylist = async (req, res) => {
 // @access Private
 export const getPlaylists = async (req, res) => {
   try {
-    const conn = await client.connect();
+
     const db = conn.db("music_streaming");
     const collection = db.collection("playlists");
     const playlists = await collection
@@ -127,7 +125,7 @@ export const getPlaylists = async (req, res) => {
 // @access Private
 export const getPlaylist = async (req, res) => {
   try {
-    const conn = await client.connect();
+
     const db = conn.db("music_streaming");
     const collection = db.collection("playlists");
 

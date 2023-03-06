@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 import jwt from 'jsonwebtoken'
-import client from "../config/db.js";
+import conn from "../config/db.js";
 
 // @desc    Login User
 // @route   POST /api/v1/auth/login
@@ -15,7 +15,6 @@ export const login = async (req, res) => {
             throw new Error("Please add all fields");
         }
 
-        const conn = await client.connect();
         const db = conn.db('music_streaming');
         const collection = db.collection('users');
         // Check if user exists
@@ -40,8 +39,6 @@ export const login = async (req, res) => {
     }
     catch(err){
         res.send(err.message)
-    }finally{
-        await client.close();
     }
 
 };
@@ -62,7 +59,6 @@ export const register = async (req, res) => {
       throw new Error("Please add all fields");
     }
 
-    const conn = await client.connect();
     const db = conn.db('music_streaming');
     const collection = db.collection('users');
 
@@ -96,8 +92,6 @@ export const register = async (req, res) => {
   } catch (err) {
     console.log(err.message);
     return res.send(err.message);
-  }finally{
-    await client.close();
   }
 };
 

@@ -9,4 +9,8 @@ const client = new MongoClient(process.env.MONGO_URI, {
   useUnifiedTopology: true,
 });
 
-export default client;
+const conn = await client.connect();
+conn.once("open", () => {
+  console.log("MongoDB database connection established successfully");
+});
+export default conn;

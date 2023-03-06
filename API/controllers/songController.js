@@ -1,4 +1,4 @@
-import client from "../config/db.js";
+import conn from "../config/db.js";
 import fs from "fs";
 import mongodb from "mongodb";
 
@@ -17,7 +17,6 @@ export const addSong = async (req, res) => {
     }
 
     // connction to the database
-    const conn = await client.connect();
     const db = conn.db("music_streaming");
     const collection = db.collection("songs");
     const bucket = new mongodb.GridFSBucket(db, {
@@ -75,7 +74,7 @@ export const deleteSong = async (req, res) => {
       res.status(400);
       throw new Error("No id provided");
     }
-    const conn = await client.connect();
+   
     const db = conn.db("music_streaming");
     const collection = db.collection("songs");
     const bucket = new mongodb.GridFSBucket(db, {
@@ -114,7 +113,7 @@ export const deleteSong = async (req, res) => {
 // @access  Public
 export const getSongs = async (req, res) => {
   try {
-    const conn = await client.connect();
+   
     const db = conn.db("music_streaming");
     const collection = db.collection("songs");
     const songs = await collection.find({}).toArray();
@@ -140,7 +139,7 @@ export const streamSong = async (req, res) => {
       throw new Error("No file name provided");
     }
     // connection to the database and getting the file from the database
-    const conn = await client.connect();
+    
     const db = conn.db("music_streaming");
     const bucket = new mongodb.GridFSBucket(db, {
       bucketName: "uploads",

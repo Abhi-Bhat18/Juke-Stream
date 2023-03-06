@@ -9,6 +9,7 @@ import songRoutes from "./routes/songRoutes.js";
 import playlistRoutes from "./routes/playlistRoutes.js";
 import { getSongs, streamSong } from "./controllers/songController.js"; //generic functions
 import {userJwtMiddleware} from "./middlewares/authMiddleware.js"; // auth middleware
+import conn from "./config/db.js"; // database connection
 
 dotenv.config();
 const app = express();
