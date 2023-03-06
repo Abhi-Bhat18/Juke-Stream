@@ -25,6 +25,8 @@ const PlaylilstSong = ({ title, artistName, songSrc ,playlistId }) => {
     song.songUrl = songSrc;
     audio.load();
     audio.play();
+    song.setIsPlaying(true)
+
   };
 
   const headers = {
@@ -53,7 +55,7 @@ const PlaylilstSong = ({ title, artistName, songSrc ,playlistId }) => {
 
   return (
     <div className="flex relative  bg-gray-800 text-white justify-between items-center border-b-[1px] p-2 lg:w-[70vw] mx-auto">
-      <div onClick={handlePlay} className="flex space-x-5">
+      <div onClick={handlePlay} className="flex space-x-5 cursor-pointer">
         <img src={musicbg} alt="" className="w-16" />
         <div className="text-sm lg:text-lg">
           <div>{title}</div>
@@ -61,13 +63,13 @@ const PlaylilstSong = ({ title, artistName, songSrc ,playlistId }) => {
         </div>
       </div>
 
-      <div
+      <button
         onClick={handleRemove}
       
         className="relative"
       >
         <CgRemoveR size={25} />
-      </div>
+      </button>
       
     </div>
   );

@@ -151,17 +151,11 @@ export const streamSong = async (req, res) => {
     });
 
     // setting the content type of the file
-    res.set("Content-Type", "audio/mpeg");
-    res.set("Accept-Ranges", "bytes");
+
 
     // streaming the file to the client
-    const downloadStream = bucket.openDownloadStreamByName(req.params.filename);
-    downloadStream.on("error", (error) => {
-      return res.json({ error: error.message, status: "error" });
-    });
-    downloadStream.on("data", (chunk) => {
-      res.write(chunk);
-    });
+    const downloadStream = bucket.openDownloadStreamByName(req.params.filename).pipe(res).on("error", (error) => { throw error; });
+    
     downloadStream.on("end", () => {
       res.end();
     });

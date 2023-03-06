@@ -24,12 +24,11 @@ const Songs = () => {
     setLoading(true);
     fetchSongs();
 
-
     setLoading(false);
   }, [fetchSong]);
-
+ 
   const closeMenu = () => {
-    setShowMenu(false);
+    setShowMenu(false); 
   };
 
   return (

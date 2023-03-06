@@ -15,6 +15,7 @@ export const SongContextState = ({ children }) => {
     songName: "",
     songArtist: "",
     songAlbum: "",
+    isPlaying: false,
 
     setSongUrl: (url) => {
       song.songUrl = url;
@@ -26,7 +27,11 @@ export const SongContextState = ({ children }) => {
       song.songArtist = name;
     },
     setAlbumName: (name) => song.songAlbum = name,
+    setIsPlaying : ( val )=>{
+      song.isPlaying = val
+    },
+    
   };
-  const [isPlaying,setIsPlaying] = useState(false)
-  return <SongContext.Provider value={{audio,song,isPlaying,setIsPlaying,__URL__}}>{children}</SongContext.Provider>;
+
+  return <SongContext.Provider value={{audio,song,__URL__}}>{children}</SongContext.Provider>;
 };

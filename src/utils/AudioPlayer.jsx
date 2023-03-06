@@ -6,26 +6,36 @@ import { CiPlay1, CiPause1 } from "react-icons/ci";
 import { FiSkipBack, FiSkipForward } from "react-icons/fi";
 
 const AudioPlayer = () => {
-  const { song, audio } = useContext(SongContext);
-  const audioRef = useRef();
-  const srcRef = useRef();
-  const [isPlaying, setIsPlaying] = useState(false);
+  const { song, audio,  } = useContext(SongContext);
+ 
+
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
 
   const progressBar = useRef();
-  // console.log(audioRef.current.paused);
+ 
   useEffect(() => {
     audio.addEventListener("loadedmetadata", () => {
       setDuration(audio.duration);
+      progressBar.current.max = audio.duration;
+      console.log(progressBar)
+      console.log(audio)
+    });
+    audio.addEventListener("timeupdate", () => {
+      
+      setCurrentTime(audio.currentTime);
+      progressBar.current.value = `${
+        (audio.currentTime / audio.duration) * 100
+      }%`;
     });
   }, [audio.src]);
 
   // Toggle play/pause
   const togglePlayPause = () => {
+    if (song.songUrl == "") return;
     if (audio.paused) audio.play();
     else audio.pause();
-    setIsPlaying(prev => !prev);
+    song.setIsPlaying(!song.isPlaying);
   };
 
   // Calculate time
@@ -49,15 +59,13 @@ const AudioPlayer = () => {
         </div>
       </div>
 
-      <audio ref={audioRef}>
-        <source ref={srcRef} />
-      </audio>
+    
       <div className="flex space-x-3 lg:space-x-5">
         <button>
           <FiSkipBack />
         </button>
         <button onClick={togglePlayPause}>
-          {isPlaying ? <CiPause1 /> : <CiPlay1 />}
+          { song.isPlaying == true ? <CiPause1 /> : <CiPlay1 />}
         </button>
         <button>
           <FiSkipForward />
@@ -65,14 +73,14 @@ const AudioPlayer = () => {
       </div>
 
       <div className="hidden lg:flex space-x-5">
-        <input
+        {/* <input
           type="range"
           min="0"
-          max={duration}
           ref={progressBar}
-          defaultValue={0}
+          defaultValue="0"
           className=" "
-        />
+          step={"any"}
+        /> */}
         <p>
           {calculateTime(parseInt(currentTime))}/
           {calculateTime(parseInt(duration))}

@@ -21,7 +21,7 @@ import musicbg from "../assets/musicbg.jpg";
 const SongCard = ({ title, artistName, songSrc, userId, songId, file }) => {
 
   // Using context
-  const { song, audio, setSongList, __URL__ } = useContext(SongContext);
+  const { song, audio, __URL__ } = useContext(SongContext);
   const { setFetchSong} = useContext(FetchContext);
   const {dispatchQueue,dispatchList} = useContext(QueueContext)
   const navigate = useNavigate(); // Used to navigate to the playlist page
@@ -45,7 +45,7 @@ const SongCard = ({ title, artistName, songSrc, userId, songId, file }) => {
     audio.src = `${__URL__}/api/v1/stream/${songSrc}`;
     audio.load();
     audio.play();
-    console.log(audio.src);
+    song.setIsPlaying(true)
   };
 
   const headers = {
