@@ -2,23 +2,31 @@ import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import SongCard from "../components/SongCard";
 import { SidebarContext } from "../Context/SibebarContext";
+import { FetchContext } from "../Context/FetchContext";
+import { SongContext } from "../Context/SongContext";
+import { QueueContext } from "../Context/QueueContex";
 
 const Songs = () => {
   const { showMenu, setShowMenu } = useContext(SidebarContext);
-
+  const {fetchSong} = useContext(FetchContext)
+  const {queue,list} = useContext(QueueContext)
+  const {__URL__} = useContext(SongContext)
+  
   const [loading, setLoading] = useState(false);
   const [songs, setSongs] = useState(null);
 
   useEffect(() => {
     if (showMenu) setShowMenu(false);
     const fetchSongs = async () => {
-      const { data } = await axios.get("http://localhost:1337/api/v1/songs");
+      const { data } = await axios.get(`${__URL__}/api/v1/songs`);
       setSongs(data["songs"]);
     };
     setLoading(true);
     fetchSongs();
+
+
     setLoading(false);
-  }, []);
+  }, [fetchSong]);
 
   const closeMenu = () => {
     setShowMenu(false);

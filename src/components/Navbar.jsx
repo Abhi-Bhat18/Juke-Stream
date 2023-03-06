@@ -26,10 +26,10 @@ const Navbar = () => {
   return (
     <header className="z-50 w-full sticky bg-gray-900 text-white top-0 flex flex-col justify-between items-center py-1 lg:py-5 px-10 font-space shadow-2xl h-14 lg:h-16 ">
       <nav className=" mx-auto w-full flex justify-between items-center sticky top-5">
-        <div className="w-32">
+        <Link to={'/'} className="w-32 text-white">
           {/* <Logo /> */}
-          logo
-        </div>
+          JukeStream
+        </Link>
         <button onClick={toggleMenu} className="lg:hidden">
           <BsFillMenuAppFill size={25} />
         </button>

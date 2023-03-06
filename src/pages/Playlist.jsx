@@ -1,21 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useContext } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
-
+import { FetchContext } from "../Context/FetchContext";
+import { SongContext } from "../Context/SongContext";
 import PlaylilstSong from "../components/PlaylilstSong";
 import { MdDeleteForever } from "react-icons/md";
 
 const Playlist = () => {
-  const { id } = useParams();
-  const navigate = useNavigate();
-  const [playList, setPlayList] = useState(null);
+  const { id } = useParams();  //gettnig the id from the url
+  const navigate = useNavigate(); // for navigation
+  const [playList, setPlayList] = useState(null); // state for the playlist
   const [loading, setLoading] = useState(false);
-
+  const {fetchPlaylist} = useContext(FetchContext)
+  const {__URL__} = useContext(SongContext)
+  
+  // headers for the api calls
   const headers = {
     "Content-Type": "application/json",
     "X-Auth-Token": localStorage.getItem("access_token"),
   };
 
+  // delete playlist
   const deletePlaylist = async () => {
     setLoading(true);
     const { data, status } = await axios.delete(
@@ -28,22 +33,27 @@ const Playlist = () => {
       navigate("/playlists");
     }
   };
+
+  // confirm delete and handle delete
   const handleDelete = () => {
     if (window.confirm("Are you sure you want to delete this playlist?")) {
       deletePlaylist();
     }
   };
 
+  // get playlist
   const getPlaylist = async () => {
     const { data } = await axios.get(
-      `http://localhost:1337/api/v1/playlist/${id}`,
+      `${__URL__}/api/v1/playlist/${id}`,
       { headers }
     );
     setPlayList(data["playlist"]);
   };
+
+  // fetch playlist on load
   useEffect(() => {
     getPlaylist();
-  }, []);
+  }, [fetchPlaylist]);
 
   return loading || playList === null ? (
     <div>Loading...</div>

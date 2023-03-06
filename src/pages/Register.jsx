@@ -49,7 +49,7 @@ const Register = () => {
         onSubmit={handleSubmit}
       >
         <h1 className="text-center text-purple-800 text-2xl -mt-5 underline underline-offset-2 font-mono">
-          Login
+          Register
         </h1>
         <div className="flex flex-col space-y-5 p-5 rounded-xl">
           <input
@@ -86,7 +86,7 @@ const Register = () => {
           </button>
           <div className="flex justify-center items-center">
             <p>already have an account?</p>
-            <Link to="/login">Login</Link>
+            <Link to="/login" className="text-gray-900">Login</Link>
           </div>
         </div>
       </form>

@@ -1,15 +1,14 @@
-import { createContext } from "react";
+import { createContext,useState } from "react";
 
 export const FetchContext = createContext();
 
 export const FetchContextState = ({children})=>{
-    const [loading,setLoading] = useState(false)
-    const [songs,setSongs] = useState(null)
-    const [playlists,setPlaylists] = useState(null)
+    const [fetchSong,setFetchSong] = useState(false)
+    const [fetchPlaylist,setFetchPlaylist] = useState(false)
     
     return(
-        <FetchContext.Provider value={{}}>
-            
+        <FetchContext.Provider value={{fetchSong,setFetchSong,setFetchPlaylist,fetchPlaylist}}>
+            {children}
         </FetchContext.Provider>
     )
 }

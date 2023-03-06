@@ -3,10 +3,12 @@ import axios from "axios";
 // import { redirect } from "react-router-dom";
 import { SidebarContext } from "../Context/SibebarContext";
 import { useNavigate } from "react-router-dom";
+import { SongContext } from "../Context/SongContext";
 const UploadSong = () => {
   const navigate = useNavigate();
   // we are using this to close the sidebar when we land on this page
   const { showMenu, setShowMenu } = useContext(SidebarContext);
+  const {__URL__} = useContext(SongContext)
   useEffect(() => {
     if (showMenu) setShowMenu(false);
   }, []);
@@ -40,7 +42,7 @@ const UploadSong = () => {
       },
     };
     const result = await axios.post(
-      "http://localhost:1337/api/v1/song/upload",
+      `${__URL__}/api/v1/song/upload`,
       formData,
       config
     );

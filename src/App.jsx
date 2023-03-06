@@ -1,38 +1,46 @@
+import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+
+//Importing Components
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Songs from "./pages/Songs";
 import UploadSong from "./pages/UploadSong";
 import Login from "./pages/Login";
-import CreatePlayList from "./pages/CreatePlaylist"
-import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
-
-import { SidebarContextState } from "./Context/SibebarContext";
-import { SongContextState } from "./Context/SongContext";
+import CreatePlayList from "./pages/CreatePlaylist";
 import AudioPlayer from "./utils/AudioPlayer";
 import Register from "./pages/Register";
 import Playlist from "./pages/Playlist";
 
+//Importing Contexts
+import { SidebarContextState } from "./Context/SibebarContext";
+import { SongContextState } from "./Context/SongContext";
+import { QueueContextState } from "./Context/QueueContex";
+import { FetchContextState } from "./Context/FetchContext";
+
+//General Layout
 const Layout = () => {
   return (
     <div className="relative z-0 w-screen">
       <SidebarContextState>
         <SongContextState>
-          <Navbar />
-          <div className="">
-            <Outlet />
-          </div>
-          <div className="">
-            {/* <FooterNav />  */}
-            {/* <MusicPlayer /> */}
-            <AudioPlayer/>
-          </div>
-          {/* <SongCard/> */}
+          <FetchContextState>
+            <Navbar />
+            <QueueContextState>
+            <div className="">
+              <Outlet />
+            </div>
+            <div className="">
+              <AudioPlayer />
+            </div>
+            </QueueContextState>
+          </FetchContextState>
         </SongContextState>
       </SidebarContextState>
     </div>
   );
 };
 
+//Routing
 const router = createBrowserRouter([
   {
     path: "/",
@@ -40,19 +48,19 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home />
+        element: <Home />,
       },
       {
         path: "/upload",
-        element: <UploadSong />
+        element: <UploadSong />,
       },
       {
         path: "/explore",
-        element: <Songs />
+        element: <Songs />,
       },
       {
         path: "/playlists",
-        element: <CreatePlayList />
+        element: <CreatePlayList />,
       },
       {
         path: "/playlist/:id",
@@ -66,7 +74,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/register",
-    element: <Register/>,
+    element: <Register />,
   },
 ]);
 

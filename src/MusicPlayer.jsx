@@ -31,9 +31,8 @@ const MusicPlayer = () => {
       cancelAnimationFrame(animationRef.current);
     }
   };
+  
   useEffect(() => {
-    // audioRef.current.src = songs[0];
-    // audioRef.current.load();
     const seconds = Math.floor(audioRef.current.duration);
     setDuration(seconds);
     progressBar.current.max = seconds;

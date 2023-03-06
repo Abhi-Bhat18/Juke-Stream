@@ -7,12 +7,14 @@ import { FiSkipBack, FiSkipForward } from "react-icons/fi";
 
 const AudioPlayer = () => {
   const { song, audio } = useContext(SongContext);
-  const [isPlaying, setIsPlaying] = useState(audio.paused);
+  const audioRef = useRef();
+  const srcRef = useRef();
+  const [isPlaying, setIsPlaying] = useState(false);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
 
   const progressBar = useRef();
-
+  // console.log(audioRef.current.paused);
   useEffect(() => {
     audio.addEventListener("loadedmetadata", () => {
       setDuration(audio.duration);
@@ -23,7 +25,6 @@ const AudioPlayer = () => {
   const togglePlayPause = () => {
     if (audio.paused) audio.play();
     else audio.pause();
-    // console.log(isPlaying)
     setIsPlaying(prev => !prev);
   };
 
@@ -48,12 +49,15 @@ const AudioPlayer = () => {
         </div>
       </div>
 
+      <audio ref={audioRef}>
+        <source ref={srcRef} />
+      </audio>
       <div className="flex space-x-3 lg:space-x-5">
         <button>
           <FiSkipBack />
         </button>
         <button onClick={togglePlayPause}>
-          {isPlaying ? <CiPause1 /> :<CiPlay1 />   }
+          {isPlaying ? <CiPause1 /> : <CiPlay1 />}
         </button>
         <button>
           <FiSkipForward />
@@ -61,7 +65,14 @@ const AudioPlayer = () => {
       </div>
 
       <div className="hidden lg:flex space-x-5">
-        <input type="range" ref={progressBar} defaultValue={0} className=" " />
+        <input
+          type="range"
+          min="0"
+          max={duration}
+          ref={progressBar}
+          defaultValue={0}
+          className=" "
+        />
         <p>
           {calculateTime(parseInt(currentTime))}/
           {calculateTime(parseInt(duration))}

@@ -69,9 +69,9 @@ const Login = () => {
           <button className="flex justify-center items-center space-x-2 bg-purple-800 text-white py-1 rounded-sm shadow-md hover:bg-purple-900 hover:tracking-wider font-mono">
             <span>Login</span><AiOutlineLogin/>
           </button>
-          <div className="flex justify-center items-center">
+          <div className="flex justify-center items-center space-x-2">
             <p>Forgot Password?</p>
-            <Link to="/register">Register</Link>
+            <Link to="/register" className="text-gray-900">Register</Link>
           </div>
         </div>
       </form>

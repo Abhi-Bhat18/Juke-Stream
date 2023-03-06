@@ -2,27 +2,27 @@ import React from "react";
 import { useContext, useState, useRef } from "react";
 import axios from 'axios'
 import { SongContext } from "../Context/SongContext";
-import { SlOptionsVertical } from "react-icons/sl";
 import { decodeToken } from "react-jwt";
 import musicbg from "../assets/musicbg.jpg";
 import { useNavigate } from "react-router-dom";
 import {CgRemoveR} from 'react-icons/cg'
-const PlaylilstSong = ({ title, artistName, songSrc ,playlistId }) => {
-  const { song, audio, setSongList } = useContext(SongContext);
+import { FetchContext } from "../Context/FetchContext";
 
+
+const PlaylilstSong = ({ title, artistName, songSrc ,playlistId }) => {
+  const { song, audio, __URL__ } = useContext(SongContext);
+  const {setFetchPlaylist} = useContext(FetchContext)
   const navigate = useNavigate();
   const token = localStorage.getItem("access_token");
   const decoded = decodeToken(token);
-  const [showOptions, setShowOptions] = useState(false);
-
-  // Display the options
-  const displayOptions = () => {
-    setShowOptions((prev) => !prev);
-  };
-
+ 
   // Play the song when the user clicks on the song card
   const handlePlay = () => {
-    audio.src = `http://localhost:1337/api/v1/stream/${songSrc}`;
+    audio.pause();
+    audio.src = `${__URL__}/api/v1/stream/${songSrc}`;
+    song.songName = title;
+    song.songArtist = artistName;
+    song.songUrl = songSrc;
     audio.load();
     audio.play();
   };
@@ -33,17 +33,21 @@ const PlaylilstSong = ({ title, artistName, songSrc ,playlistId }) => {
   };
 
   const removeSong = async () => {
-    const { data } = await axios.delete(
+    const { data,status } = await axios.delete(
       `http://localhost:1337/api/v1/playlist/remove/${playlistId}?song=${title}`,
       {
         headers,
       }
     );
+    if(status == 200){
+      alert('Song removed from the playlist');
+      setFetchPlaylist(prev => !prev)
+    }
   };
   // remove the song from playlist
   const handleRemove = () => {
     // Remove the song from the Playlist
-    window.confirm('Are you sure you want to remove this song from the playlist?')
+    // window.confirm('Are you sure you want to remove this song from the playlist?')
     removeSong();
   };
 

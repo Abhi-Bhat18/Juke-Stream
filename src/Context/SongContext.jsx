@@ -2,8 +2,13 @@ import { createContext, useState, useRef } from "react";
 
 export const SongContext = createContext();
 
-
 export const SongContextState = ({ children }) => {
+  let __URL__;
+  if(document.domain === "localhost"){
+    __URL__ = "http://localhost:1337"
+  }else{
+    __URL__ = ""
+  }
   const audio = new Audio();
   const song = {
     songUrl: "",
@@ -23,6 +28,5 @@ export const SongContextState = ({ children }) => {
     setAlbumName: (name) => song.songAlbum = name,
   };
   const [isPlaying,setIsPlaying] = useState(false)
-  const [songList, setSongList] = useState([]);
-  return <SongContext.Provider value={{song,audio,setSongList,songList,isPlaying,setIsPlaying}}>{children}</SongContext.Provider>;
+  return <SongContext.Provider value={{audio,song,isPlaying,setIsPlaying,__URL__}}>{children}</SongContext.Provider>;
 };

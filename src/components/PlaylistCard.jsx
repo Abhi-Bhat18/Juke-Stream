@@ -4,23 +4,34 @@ import { SongContext } from "../Context/SongContext";
 import playlist from "../assets/playlist.jpg";
 import { CgPlayListAdd } from "react-icons/cg";
 import { Link } from "react-router-dom";
-const PlaylistCard = ({playlistName,playlistId,noSongs}) => {
+import { FetchContext } from "../Context/FetchContext";
+import { QueueContext } from "../Context/QueueContex";
 
-    const {songList} = useContext(SongContext)
+
+const PlaylistCard = ({playlistName,playlistId,noSongs}) => {
+    const {setFetchPlaylist} = useContext(FetchContext)
+    const {song,songList,setSongList,__URL__} = useContext(SongContext)
+    const {list,dispatchList} = useContext(QueueContext)
+
     const [loading,setLoading] = useState(false)
 
-
+    // Adding song to playlist
     const addSongToPlaylist = async () => {
-        if(songList.length === 0) return alert("Please select a song");
+      console.log(list)
+        if(list.length === 0) return alert("Please select a song");
         setLoading(true)
         const headers = {
             "Content-Type": "application/json",
             "X-Auth-Token": localStorage.getItem("access_token"),
             };
-        const {data,status} = await axios.post(`http://localhost:1337/api/v1/playlist/add/${playlistId}`,songList,{headers})
-        console.log(data)
-        console.log(status)
+        const {data,status} = await axios.post(`${__URL__}/api/v1/playlist/add/${playlistId}`,list,{headers})
+        if(status === 200){
+            alert("Song added to playlist")
+            setFetchPlaylist(prev => !prev)
+            dispatchList({type:"REMOVE_SONG",payload:list[0]['title']})
+        } 
         setLoading(false)
+         
     }
 
   return (

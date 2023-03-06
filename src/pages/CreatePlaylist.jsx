@@ -1,12 +1,22 @@
 import React, { useEffect, useContext } from "react";
 import axios from "axios";
 import PlaylistCard from "../components/PlaylistCard";
-import { GrFormAdd } from "react-icons/gr";
+
+//Importing Context
 import { SidebarContext } from "../Context/SibebarContext";
+import { FetchContext } from "../Context/FetchContext";
+import { SongContext } from "../Context/SongContext";
+import { QueueContext } from "../Context/QueueContex";
+
+import { GrFormAdd } from "react-icons/gr";
+
 
 const CreatePlaylist = () => {
-
+  const {fetchPlaylist} = useContext(FetchContext)
   const { showMenu, setShowMenu } = useContext(SidebarContext);
+  const {__URL__} = useContext(SongContext)
+  const {list} = useContext(QueueContext)
+  console.log(list)
   const [cretePlaylist, setCreatePlaylist] = React.useState(false);
   const [playlists, setPlaylists] = React.useState(null);
   const [loading, setLoading] = React.useState(false);
@@ -21,6 +31,7 @@ const CreatePlaylist = () => {
     setCreatePlaylist(false);
   };
 
+  let token = localStorage.getItem("access_token") || null;
   const headers = {
     "Content-Type": "application/json",
     "X-Auth-Token": localStorage.getItem("access_token"),
@@ -28,14 +39,14 @@ const CreatePlaylist = () => {
 
   // Create a playlist
   const createPlaylist = async () => {
+    if(!token) return alert("Please login to create a playlist")
     const playlistName = document.getElementById("playlistName").value;
     if (playlistName === "") return alert("Please enter a playlist name");
     const {data,status} = await axios.post(
-      "http://localhost:1337/api/v1/playlist/create",
+      `${__URL__}/api/v1/playlist/create`,
       { playlistName },
       { headers }
     );
-    console.log(status)
     if(status === 200){
       alert("Playlist created successfully")
       setCreatePlaylist(false)
@@ -48,7 +59,7 @@ const CreatePlaylist = () => {
 
   // fetching playlists
   const fetchPlaylists = async () => {
-    const { data } = await axios.get("http://localhost:1337/api/v1/playlist", {
+    const { data } = await axios.get(`${__URL__}/api/v1/playlist`, {
       headers,
     });
     setPlaylists(data["playlists"]);
@@ -60,7 +71,7 @@ const CreatePlaylist = () => {
     setLoading(true);
     fetchPlaylists();
     setLoading(false);
-  }, []);
+  }, [fetchPlaylist]);
 
   return (
     <div className="bg-slate-800 text-teal-200 flex justify-start flex-col p-5 space-y-10 min-h-screen pb-32 ">
