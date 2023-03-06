@@ -48,7 +48,6 @@ export const addSong = async (req, res) => {
         file: readStream.id,
       });
       if (song) {
-        conn.close();
         res
           .status(201)
           .json({ message: "Song added successfully", status: "success" });
@@ -97,8 +96,6 @@ export const deleteSong = async (req, res) => {
     });
     if (deleteSong) {
       await bucket.delete(new mongodb.ObjectId(req.query.file));
-
-      conn.close();
       res
         .status(200)
         .json({ message: "Song deleted successfully", status: "success" });
@@ -121,7 +118,6 @@ export const getSongs = async (req, res) => {
     const db = conn.db("music_streaming");
     const collection = db.collection("songs");
     const songs = await collection.find({}).toArray();
-    conn.close();
     if (songs.length === 0) {
       res.status(404);
       throw new Error("No songs found");

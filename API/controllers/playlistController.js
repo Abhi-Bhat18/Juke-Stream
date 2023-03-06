@@ -22,7 +22,7 @@ export const addPlaylist = async (req, res) => {
       return res
         .status(200)
         .json({ message: "Playlist added successfully", status: "success" });
-      conn.close();
+    
     } else throw new Error("Error adding playlist");
   } catch (error) {
     console.log(error);
@@ -43,7 +43,6 @@ export const deletePlaylist = async (req, res) => {
       _id: new mongodb.ObjectId(req.params.id),
     });
     if (playlist) {
-      conn.close();
       return res
         .status(200)
         .json({ message: "Playlist deleted successfully", status: "success" });
@@ -68,7 +67,6 @@ export const addSongToPlaylist = async (req, res) => {
       { $push: { songs: req.body[0] } }
     );
     if (playlist) {
-      conn.close();
       return res
         .status(200)
         .json({ message: "Song added to playlist", status: "success" });
@@ -117,7 +115,6 @@ export const getPlaylists = async (req, res) => {
       res.status(404);
       throw new Error("No playlists found");
     }
-    conn.close();
     res.status(200).json({ playlists });
   } catch (error) {
     console.log(error.message);
@@ -138,7 +135,6 @@ export const getPlaylist = async (req, res) => {
       _id: new mongodb.ObjectId(req.params.id),
     });
     if (playlist) {
-      conn.close();
       return res.status(200).json({ playlist });
     } else throw new Error("Error getting playlist");
   } catch (error) {
