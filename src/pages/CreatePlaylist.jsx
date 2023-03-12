@@ -98,7 +98,7 @@ const CreatePlaylist = () => {
 
       <div
         onClick={createCardOpen}
-        className="bg-[#ffd700] fixed rounded-xl px-2 text-lg  bottom-20 right-5 flex justify-center items-center space-x-1"
+        className="bg-[#ffd700] fixed rounded-xl px-2 text-lg  bottom-20 right-5 flex justify-center items-center space-x-1 cursor-pointer"
       >
         <GrFormAdd />
         <span className="text-gray-900">Create Playlist</span>
@@ -121,7 +121,7 @@ const CreatePlaylist = () => {
             />
             <button
               onClick={createPlaylist}
-              className="bg-[#ffd700] px-5 py-1 rounded-md lg:rounded-xl shadow-lg text-[#7d0000] text-sm"
+              className="bg-[#ffd700] px-5 py-1 rounded-md lg:rounded-xl shadow-lg text-[#7d0000] text-sm "
             >
               Create
             </button>

@@ -1,11 +1,11 @@
 import bcrypt from "bcryptjs";
 import jwt from 'jsonwebtoken'
 import conn from "../config/db.js";
-
+ 
 // @desc    Login User
 // @route   POST /api/v1/auth/login
 // @access  Public
-export const login = async (req, res) => {
+export const login = async (req, res) => { 
     try{
         const {email,password} = req.body;
 

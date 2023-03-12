@@ -35,7 +35,7 @@ const Songs = () => {
     <div onClick={closeMenu} className="bg-gray-900 p-5 space-y-2 min-h-screen">
       {loading && songs == null ? (
         <div>loading...</div>
-      ) : !loading && songs ? (
+      ) : !loading && songs != null ? (
         songs.map((song,index) => {
           return (
             <SongCard
@@ -50,7 +50,7 @@ const Songs = () => {
           );
         })
       ) : (
-        <div>no songs</div>
+        <div>Loading...</div>
       )}
     </div>
   );
